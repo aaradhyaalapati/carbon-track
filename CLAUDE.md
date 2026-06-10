@@ -10,7 +10,7 @@ reduction tips, and tracks a reduction goal over time. It is a competition entry
 axes — **Code Quality, Security, Efficiency, Testing, Accessibility**.
 
 It is **built, tested, and deployed** (live at https://carbontrackx.vercel.app, repo
-`Vishalsomaraju/carbontrack`).
+`aaradhyaalapati/carbon-track`).
 
 ---
 
