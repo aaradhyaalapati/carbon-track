@@ -1,5 +1,13 @@
 import type { JSX } from 'react';
-import { formatCo2, formatNumber, formatPercent, formatTonnes, type FootprintResult, type TargetComparison, type AverageComparison } from '@/lib';
+import {
+  formatCo2,
+  formatNumber,
+  formatPercent,
+  formatTonnes,
+  type FootprintResult,
+  type TargetComparison,
+  type AverageComparison,
+} from '@/lib';
 import { REGION_LABELS } from '@/components/labels';
 import { StatCard } from './StatCard';
 import { ComparisonCard } from './ComparisonCard';
