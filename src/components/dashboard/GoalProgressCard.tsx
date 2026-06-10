@@ -15,7 +15,7 @@ export interface GoalProgressCardProps {
 function GoalStat({ label, tonnes }: { label: string; tonnes: number }): JSX.Element {
   return (
     <div className="rounded-2xl bg-surface p-3">
-      <p className="text-xs uppercase tracking-wide text-ink/60">{label}</p>
+      <p className="text-xs uppercase tracking-wide text-ink/75">{label}</p>
       <p className="font-display text-lg font-bold text-ink">{formatTonnes(tonnes)}</p>
     </div>
   );

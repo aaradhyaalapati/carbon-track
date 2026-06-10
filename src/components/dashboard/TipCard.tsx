@@ -31,7 +31,7 @@ export function TipCard({ tip, rank }: TipCardProps): JSX.Element {
           <span className="text-xs font-semibold text-ink/50">#{rank}</span>
           <h3 className="font-semibold text-ink">{tip.title}</h3>
         </div>
-        <p className="text-sm text-ink/70">{tip.description}</p>
+        <p className="text-sm text-ink/80">{tip.description}</p>
         <div className="mt-1 flex flex-wrap items-center gap-2">
           <Badge tone="primary">
             <Icon name="leaf" size={14} />

@@ -27,7 +27,7 @@ export function HowItWorks(): JSX.Element {
         <h2 id="how-heading" className="font-display text-3xl font-bold text-ink">
           How it works
         </h2>
-        <p className="mt-3 text-ink/70">Three steps from a quick questionnaire to a clear plan.</p>
+        <p className="mt-3 text-ink/80">Three steps from a quick questionnaire to a clear plan.</p>
       </div>
       <ol className="mt-12 grid gap-6 md:grid-cols-3">
         {STEPS.map((step, i) => (
@@ -39,7 +39,7 @@ export function HowItWorks(): JSX.Element {
               <span className="font-display text-2xl font-bold text-primary/40">{i + 1}</span>
             </div>
             <h3 className="font-display text-xl font-semibold text-ink">{step.title}</h3>
-            <p className="text-ink/70">{step.body}</p>
+            <p className="text-ink/80">{step.body}</p>
           </Card>
         ))}
       </ol>

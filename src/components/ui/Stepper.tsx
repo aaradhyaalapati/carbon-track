@@ -45,7 +45,7 @@ export function Stepper({ steps, current }: StepperProps): JSX.Element {
               <span
                 className={cn(
                   'text-sm',
-                  status === 'current' ? 'font-semibold text-ink' : 'text-ink/60',
+                  status === 'current' ? 'font-semibold text-ink' : 'text-ink/75',
                 )}
               >
                 {label}

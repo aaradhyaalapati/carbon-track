@@ -31,7 +31,7 @@ export function Checkbox({ label, description, checked, onChange }: CheckboxProp
       />
       <span className="flex flex-col">
         <span className="font-medium text-ink">{label}</span>
-        {description ? <span className="text-sm text-ink/60">{description}</span> : null}
+        {description ? <span className="text-sm text-ink/75">{description}</span> : null}
       </span>
     </label>
   );

@@ -41,7 +41,7 @@ export function ComparisonCard({
         </Badge>
       </div>
       <p className="font-display text-2xl font-bold text-ink">{headline}</p>
-      <p className="text-sm text-ink/70">{detail}</p>
+      <p className="text-sm text-ink/80">{detail}</p>
     </Card>
   );
 }

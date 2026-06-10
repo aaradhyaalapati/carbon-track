@@ -48,7 +48,7 @@ export function DashboardLoader(): JSX.Element {
           <Icon name="leaf" size={28} />
         </span>
         <h2 className="font-display text-2xl font-bold text-ink">No results yet</h2>
-        <p className="max-w-md text-ink/70">
+        <p className="max-w-md text-ink/80">
           Answer the short questionnaire and your footprint, comparisons, and reduction tips will
           appear here.
         </p>

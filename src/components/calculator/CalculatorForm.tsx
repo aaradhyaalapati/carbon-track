@@ -34,7 +34,7 @@ export function CalculatorForm(): JSX.Element {
           >
             {STEP_LABELS[step] === 'Review' ? 'Review your answers' : `${STEP_LABELS[step]}`}
           </h2>
-          <p className="mt-1 text-ink/60">
+          <p className="mt-1 text-ink/75">
             Step {step + 1} of {STEP_LABELS.length}
           </p>
 

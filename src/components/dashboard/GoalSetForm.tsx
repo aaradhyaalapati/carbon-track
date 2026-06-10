@@ -31,7 +31,7 @@ export function GoalSetForm({
         </span>
         <h3 className="font-display text-lg font-semibold text-ink">Set a reduction goal</h3>
       </div>
-      <p className="text-sm text-ink/70">
+      <p className="text-sm text-ink/80">
         Pick an annual target below your current {formatTonnes(currentTonnes)}. We&apos;ll track
         your progress as you recalculate over time.
       </p>

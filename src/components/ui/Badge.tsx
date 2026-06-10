@@ -7,7 +7,7 @@ const tones: Record<Tone, string> = {
   primary: 'bg-primary/10 text-primary-dark',
   accent: 'bg-accent/10 text-accent',
   warning: 'bg-warning/20 text-ink',
-  neutral: 'bg-ink/5 text-ink/70',
+  neutral: 'bg-ink/5 text-ink/80',
   danger: 'bg-red-100 text-red-800',
 };
 

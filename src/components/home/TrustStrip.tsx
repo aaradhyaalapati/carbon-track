@@ -35,12 +35,12 @@ export function TrustStrip(): JSX.Element {
               </span>
               <div>
                 <h3 className="font-semibold text-ink">{item.title}</h3>
-                <p className="mt-1 text-sm text-ink/70">{item.body}</p>
+                <p className="mt-1 text-sm text-ink/80">{item.body}</p>
               </div>
             </div>
           ))}
         </div>
-        <p className="mt-10 text-center text-sm text-ink/60">
+        <p className="mt-10 text-center text-sm text-ink/75">
           Full sourcing and caveats are documented in the project&apos;s{' '}
           <span className="font-medium text-ink">methodology</span>.
         </p>

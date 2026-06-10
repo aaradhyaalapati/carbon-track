@@ -32,7 +32,7 @@ export function Hero(): JSX.Element {
               View your dashboard
             </ButtonLink>
           </div>
-          <p className="mt-4 text-sm text-ink/60">
+          <p className="mt-4 text-sm text-ink/75">
             Free · No sign-up · Aligned to a {TARGET_TONNES}t&nbsp;CO₂e science-based target
           </p>
         </div>

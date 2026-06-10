@@ -25,7 +25,7 @@ export function ConsumptionStep({ value, onChange, errors }: ConsumptionStepProp
       />
       <fieldset>
         <legend className="font-medium text-ink">Recycling</legend>
-        <p className="mt-1 text-sm text-ink/60">Do you recycle household waste routinely?</p>
+        <p className="mt-1 text-sm text-ink/75">Do you recycle household waste routinely?</p>
         <div className="mt-3">
           <Checkbox
             label="I recycle consistently"

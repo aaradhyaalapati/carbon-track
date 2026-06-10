@@ -53,7 +53,7 @@ export function NumberField({
             }}
           />
           {unit ? (
-            <span className="flex shrink-0 items-center rounded-2xl bg-surface px-3 text-sm text-ink/70">
+            <span className="flex shrink-0 items-center rounded-2xl bg-surface px-3 text-sm text-ink/80">
               {unit}
             </span>
           ) : null}

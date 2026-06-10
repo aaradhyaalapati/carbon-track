@@ -49,7 +49,7 @@ export function Field({
         ) : null}
       </label>
       {hint ? (
-        <p id={hintId} className="text-sm text-ink/60">
+        <p id={hintId} className="text-sm text-ink/75">
           {hint}
         </p>
       ) : null}

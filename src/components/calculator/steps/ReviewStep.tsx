@@ -78,7 +78,7 @@ export function ReviewStep({ input }: ReviewStepProps): JSX.Element {
           Estimated annual footprint
         </p>
         <p className="mt-1 font-display text-4xl font-bold text-ink">{formatCo2(result.totalKg)}</p>
-        <p className="mt-1 text-sm text-ink/60">
+        <p className="mt-1 text-sm text-ink/75">
           Submit to save your profile and open the full breakdown.
         </p>
       </div>
@@ -92,7 +92,7 @@ export function ReviewStep({ input }: ReviewStepProps): JSX.Element {
             <div className="mt-2 flex flex-col gap-1.5">
               {group.rows.map((row) => (
                 <div key={row.label} className="flex justify-between gap-4 text-sm">
-                  <dt className="text-ink/60">{row.label}</dt>
+                  <dt className="text-ink/75">{row.label}</dt>
                   <dd className="text-right font-medium text-ink">{row.value}</dd>
                 </div>
               ))}

@@ -19,7 +19,7 @@ export default function CalculatorPage(): JSX.Element {
         <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">
           Estimate your footprint
         </h1>
-        <p className="mt-2 text-ink/70">
+        <p className="mt-2 text-ink/80">
           A few quick questions. Your answers stay on this device, and you can refine them any time.
         </p>
       </header>

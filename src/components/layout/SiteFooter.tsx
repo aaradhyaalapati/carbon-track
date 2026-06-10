@@ -16,14 +16,14 @@ export function SiteFooter(): JSX.Element {
             </span>
             <span className="font-display font-semibold text-ink">CarbonTrack</span>
           </div>
-          <p className="max-w-md text-sm text-ink/60">
+          <p className="max-w-md text-sm text-ink/75">
             Estimates are for awareness and relative comparison, not audit-grade carbon accounting.
             Your data stays on your device — nothing is sent to a server.
           </p>
         </div>
         <p className="mt-6 text-xs text-ink/50">
           © {new Date().getFullYear()} CarbonTrack · Main Challenge 3 of PromptWars Virtual ·{' '}
-          <span className="text-ink/70">“Carbon Footprint Awareness Platform”</span>
+          <span className="text-ink/80">“Carbon Footprint Awareness Platform”</span>
         </p>
       </div>
     </footer>
