@@ -10,8 +10,8 @@ import {
   loadInput,
   saveGoal,
   saveInput,
-} from './storage';
-import { defaultFootprintInput, type Goal } from './schemas';
+} from '@/lib/storage';
+import { defaultFootprintInput, type Goal } from '@/lib/schemas';
 
 function createMockStorage(): Storage {
   const map = new Map<string, string>();

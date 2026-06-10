@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { makeInput } from '@/test/factories';
-import { calculateFootprint, heatingFactorFor } from './calculator';
-import { GRID_INTENSITY, HEAT_PUMP_COP } from './emission-factors';
+import { calculateFootprint, heatingFactorFor } from '@/lib/calculator';
+import { GRID_INTENSITY, HEAT_PUMP_COP } from '@/lib/emission-factors';
 
 describe('calculateFootprint', () => {
   it('computes a known baseline scenario exactly', () => {

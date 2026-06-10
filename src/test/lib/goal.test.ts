@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { goalProgress } from './goal';
-import type { Goal } from './schemas';
+import { goalProgress } from '@/lib/goal';
+import type { Goal } from '@/lib/schemas';
 
 function makeGoal(baselineTonnes: number, targetTonnes: number): Goal {
   return { baselineTonnes, targetTonnes, createdAt: '2026-01-01T00:00:00.000Z' };

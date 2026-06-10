@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { defaultFootprintInput } from '@/lib';
-import type { HomeInput } from '../validation';
-import { HomeStep } from './HomeStep';
+import type { HomeInput } from '@/components/calculator/validation';
+import { HomeStep } from '@/components/calculator/steps/HomeStep';
 
 function renderHome(overrides: Partial<HomeInput> = {}) {
   const onChange = vi.fn();

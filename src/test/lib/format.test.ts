@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatCo2, formatNumber, formatPercent, formatTonnes } from './format';
+import { formatCo2, formatNumber, formatPercent, formatTonnes } from '@/lib/format';
 
 describe('formatNumber', () => {
   it('formats integers with thousands separators', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { compareToTarget, compareToAverage } from './comparisons';
+import { compareToTarget, compareToAverage } from '@/lib/comparisons';
 
 describe('compareToTarget', () => {
   it('treats a footprint at the target as "below"', () => {

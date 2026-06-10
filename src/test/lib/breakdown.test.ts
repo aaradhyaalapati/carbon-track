@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { makeInput } from '@/test/factories';
-import { categoryBreakdown } from './breakdown';
-import { calculateFootprint } from './calculator';
+import { categoryBreakdown } from '@/lib/breakdown';
+import { calculateFootprint } from '@/lib/calculator';
 
 describe('categoryBreakdown', () => {
   it('returns shares for all categories, sorted largest first', () => {

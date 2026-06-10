@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { makeInput } from '@/test/factories';
-import { generateTips } from './tips-engine';
-import { calculateFootprint } from './calculator';
+import { generateTips } from '@/lib/tips-engine';
+import { calculateFootprint } from '@/lib/calculator';
 
 const heavyInput = makeInput({
   transport: { carKmPerWeek: 150, carFuel: 'petrol', flightsLongHaulPerYear: 1 },

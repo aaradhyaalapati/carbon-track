@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { round } from './number';
+import { round } from '@/lib/number';
 
 describe('round', () => {
   it('rounds to 2 decimal places by default', () => {

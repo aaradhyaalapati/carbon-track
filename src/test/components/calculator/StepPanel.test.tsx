@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { defaultFootprintInput } from '@/lib';
-import { StepPanel } from './StepPanel';
-import { LAST_STEP } from './useCalculatorForm';
+import { StepPanel } from '@/components/calculator/StepPanel';
+import { LAST_STEP } from '@/components/calculator/useCalculatorForm';
 
 function renderStep(step: number): void {
   render(<StepPanel step={step} input={defaultFootprintInput} errors={{}} onUpdate={vi.fn()} />);

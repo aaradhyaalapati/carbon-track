@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { defaultFootprintInput } from '@/lib';
-import type { TransportInput } from '../validation';
-import { TransportStep } from './TransportStep';
+import type { TransportInput } from '@/components/calculator/validation';
+import { TransportStep } from '@/components/calculator/steps/TransportStep';
 
 function renderTransport(overrides: Partial<TransportInput> = {}) {
   const onChange = vi.fn();
@@ -23,7 +23,6 @@ describe('TransportStep', () => {
   });
 
   it('calls onChange with updated carKmPerWeek', async () => {
-    const user = userEvent.setup();
     const { onChange } = renderTransport({ carKmPerWeek: 100 });
 
     const input = screen.getByLabelText(/distance driven/i);

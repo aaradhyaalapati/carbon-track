@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { defaultFootprintInput } from '@/lib';
-import type { FoodInput } from '../validation';
-import { FoodStep } from './FoodStep';
+import type { FoodInput } from '@/components/calculator/validation';
+import { FoodStep } from '@/components/calculator/steps/FoodStep';
 
 function renderFood(overrides: Partial<FoodInput> = {}) {
   const onChange = vi.fn();
