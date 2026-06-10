@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { footprintInputSchema, defaultFootprintInput, goalSchema, historySchema } from '@/lib/schemas';
+import {
+  footprintInputSchema,
+  defaultFootprintInput,
+  goalSchema,
+  historySchema,
+} from '@/lib/schemas';
 
 describe('footprintInputSchema', () => {
   it('accepts the exported default input', () => {
