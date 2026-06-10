@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "Carbon Footprint Awareness Platform — understand, track, and reduce your carbon footprint through simple actions and personalized insights.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vishalsomaraju/carbontrack.git"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=20"

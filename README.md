@@ -4,7 +4,7 @@
 
 **Live demo:** _(https://carbontrackx.vercel.app/)_
 
-<!-- ![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg) -->
+![CI](https://github.com/Vishalsomaraju/carbontrack/actions/workflows/ci.yml/badge.svg)
 
 CarbonTrack turns a two-minute questionnaire into a personalized climate action plan: your
 estimated annual CO₂e, a category breakdown, how you compare to regional averages and a
