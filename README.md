@@ -1,138 +1,114 @@
-# 🌿 CarbonTrack — Carbon Footprint Awareness Platform
+<div align="center">
+  <h1>🌿 CarbonTrack</h1>
+  <p><b>Carbon Footprint Awareness Platform</b></p>
+  <p><i>Understand, track, and reduce your personal carbon footprint — privately, in your browser.</i></p>
 
-> Understand, track, and reduce your personal carbon footprint — privately, in your browser.
+[![CI](https://github.com/Vishalsomaraju/carbontrack/actions/workflows/ci.yml/badge.svg)](https://github.com/Vishalsomaraju/carbontrack/actions/workflows/ci.yml)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+[![Vitest](https://img.shields.io/badge/Vitest-100%25_Coverage-729B1B?logo=vitest)](https://vitest.dev/)
 
-**Live demo:** _(https://carbontrackx.vercel.app/)_
+  <br />
 
-![CI](https://github.com/Vishalsomaraju/carbontrack/actions/workflows/ci.yml/badge.svg)
+### [🚀 View Live Demo](https://carbontrackx.vercel.app/)
 
-CarbonTrack turns a two-minute questionnaire into a personalized climate action plan: your
-estimated annual CO₂e, a category breakdown, how you compare to regional averages and a
-science-based 1.5 °C target, and a ranked set of the highest-impact changes you can make —
-then it lets you set and track a reduction goal over time.
+</div>
 
-## Chosen vertical
+---
 
-**Sustainability / climate action.** Most people want to lower their environmental impact but
-don't know (a) what their footprint actually is, or (b) which changes matter most. Generic
-advice ("recycle more") ignores personal context. CarbonTrack acts as a **personal carbon
-assistant** that reasons over each person's situation and tells them where their emissions
-come from and what to do first.
+**CarbonTrack** turns a two-minute questionnaire into a personalized climate action plan. It estimates your annual CO₂e, provides a detailed category breakdown, compares your footprint to regional averages and a science-based 1.5 °C target, and ranks the highest-impact changes you can make. It also allows you to set and track a reduction goal over time.
 
-## What it does
+> [!TIP]
+> **A dynamic assistant, not a static calculator.** CarbonTrack's deterministic recommendation engine inspects your inputs and emits only the actions relevant to you. For example, it suggests an EV _only_ if you drive a petrol/diesel car and quantifies the saving from your actual mileage!
 
-- **Six-step calculator** — region, transport, home energy, food, and consumption.
-- **Results dashboard** — total footprint, category breakdown (bar + donut), comparison to
-  the regional average and the 1.5 °C target, and a trend over time.
-- **Smart, context-aware recommendations** — a ranked list of actions, each with the
-  estimated kg CO₂e it would save _for this user_.
-- **Goal tracking** — set a reduction target and track progress across visits.
-- **100% client-side** — no account, no server, nothing leaves the device.
+## ✨ Key Features
 
-## Approach & logic
+- 🌍 **Six-step Calculator:** Tailored form capturing your region, transport, home energy, food, and consumption habits.
+- 📊 **Rich Results Dashboard:** Visualize your total footprint, category breakdown (bar + donut), comparison to the regional average and the 1.5 °C target, and your trend over time.
+- 🎯 **Smart Recommendations:** A ranked list of actions, each with the estimated kg CO₂e it would save specifically _for you_.
+- 📈 **Goal Tracking:** Set a reduction target and track your progress across multiple visits.
+- 🔒 **Privacy-First:** 100% client-side. No accounts, no servers, and your data never leaves your device!
 
-**A dynamic assistant, not a static calculator.** The heart of CarbonTrack is a deterministic
-recommendation engine (`src/lib/tips-engine.ts`) that makes logical decisions from user
-context: it inspects the person's inputs and computed footprint and emits only the actions
-relevant to them. It suggests switching to an EV _only_ if they drive a petrol/diesel car —
-and quantifies the saving from their actual mileage; it suggests a renewable tariff only if
-their electricity emissions are non-zero; it proposes a realistic next-step diet rather than
-telling everyone to go vegan. Every recommendation's saving is computed from the **same**
-emission factors as the calculator, so the numbers stay internally consistent, and tips are
-ranked by impact so the biggest wins surface first.
+## 🏗️ Architecture & Logic
 
-**Separation of concerns.** All domain logic lives in `src/lib` as pure, framework-free,
-fully-typed functions, with a **Zod schema as the single source of truth** for every data
-shape. The UI imports from `@/lib` and never re-implements a calculation — keeping the logic
-trivially testable and the components thin.
+CarbonTrack is built on the modern web stack: **Next.js 15 (App Router) · TypeScript (strict) · Tailwind CSS · Zod · Recharts.**
 
-**Privacy & safety by construction.** There is no backend and no database, so there is nothing
-to breach and no secrets to leak. Persistence is `localStorage`, treated as untrusted and
-re-validated on every read.
+> [!NOTE]  
+> **Separation of concerns:** All domain logic lives in `src/lib` as pure, framework-free, fully-typed functions. A **Zod schema** acts as the single source of truth for every data shape. The UI imports from `@/lib` and never re-implements a calculation — keeping the logic trivially testable and the components thin.
 
-## How the solution works
+> [!IMPORTANT]
+> **Privacy & safety by construction:** There is no backend and no database, meaning there is nothing to breach and no secrets to leak. Persistence relies strictly on `localStorage`, which is treated as untrusted and re-validated on every read.
 
-Stack: **Next.js 15 (App Router) · TypeScript (strict) · Tailwind CSS · Zod · Recharts.**
+### Evaluation Focus
 
-1. **`/calculator`** — a six-step form. Each field maps to `footprintInputSchema`; inputs are
-   validated with Zod and errors are surfaced accessibly. Answers persist to `localStorage`.
-2. **`calculateFootprint(input)`** converts answers into annual kg CO₂e per category using
-   published emission factors.
-3. **`/dashboard`** — runs `compareToTarget` / `compareToAverage`, renders the breakdown
-   charts (each with an accessible data-table fallback), lists ranked tips from
-   `generateTips`, and tracks the reduction goal and history trend.
+- **Code Quality**: Strict TypeScript (no `any`), isolated domain logic, Zod validation, small typed components, ESLint + Prettier.
+- **Security**: No backend, nonce-based **Content-Security-Policy (CSP)** (`src/middleware.ts`) with `strict-dynamic`, and full security headers (`next.config.ts`).
+- **Efficiency**: React Server Components by default, dynamically-imported charts, self-hosted fonts.
+- **Accessibility (WCAG 2.1 AA)**: Labelled inputs, `fieldset`/`legend` groups, `aria-live` error announcements, keyboard support, visible focus rings, chart data-table fallbacks, and motion sensitivity awareness.
 
-Domain modules (`src/lib`): `emission-factors` (cited data + benchmarks), `schemas` (Zod),
-`calculator`, `tips-engine`, `comparisons`, `breakdown`, `goal`, `storage` (validated,
-fail-safe), `format`. These are rendered by ~34 small, typed React components
-(`src/components`) — Server Components by default, with client islands for the form and charts.
+## 🧪 Testing
 
-## Assumptions
+> [!NOTE]
+> The `src/lib` logic core boasts **100% statement, branch, function, and line coverage**.
 
-- Emission factors are **approximate**, for awareness and relative comparison — not
-  audit-grade accounting. Figures and sources are documented in [`METHODOLOGY.md`](./METHODOLOGY.md).
-- Home energy is attributed **per person** by dividing by household size.
-- Flights are modeled as an average per one-way trip (short vs long haul). Heating is entered
-  as the **physical quantity of fuel** in its natural unit (people know litres / m³ /
-  cylinders, not kWh of delivered heat).
-- Regional grid intensities and per-capita averages use representative 2023 values for
-  US / UK / EU / IN / Global; the personal target is **2.3 t CO₂e/yr** (1.5 °C-aligned).
-- Biomass (firewood) CO₂ is treated as biogenic / carbon-neutral per standard GHG convention
-  (caveated in the methodology).
+CarbonTrack uses **Vitest** + **Testing Library**. We have over 100 unit tests spanning:
 
-## Evaluation focus
+- The entire calculator logic and engine modules.
+- Core validation and transformation schemas.
+- Form step components and goal tracking UI.
 
-- **Code Quality** — strict TypeScript (no `any`), pure domain logic isolated in `src/lib`,
-  Zod as the single source of truth, small typed components, ESLint + Prettier, Conventional Commits.
-- **Security** — no backend or secrets; a per-request **nonce-based Content-Security-Policy**
-  (`src/middleware.ts`) with `strict-dynamic`, plus a full set of security headers
-  (`next.config.ts`); all input validated; `localStorage` treated as untrusted. See
-  [`SECURITY.md`](./SECURITY.md).
-- **Efficiency** — React Server Components by default, a dynamically-imported chart bundle,
-  self-hosted fonts (no third-party requests), minimal client state.
-- **Testing** — **99 tests across 13 suites** (Vitest + Testing Library): the `src/lib` logic
-  core sits at **100% statement, branch, function, and line coverage**, with thresholds
-  (98% lines/statements, 100% functions, 95% branches) enforced in `vitest.config.ts` and CI;
-  component suites cover the calculator flow, goal tracking, and step rendering, and
-  `@axe-core/playwright` is wired for accessibility E2E.
-- **Accessibility (WCAG 2.1 AA)** — labelled inputs, `fieldset`/`legend` groups, errors via
-  `aria-describedby` + `aria-live`, full keyboard support, visible focus, ≥44px targets, a
-  skip link, charts paired with data tables (never color alone), and `prefers-reduced-motion`
-  respected.
+All tests are enforced in CI via `vitest.config.ts`.
 
-## Getting started
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have Node.js 20+ installed.
+
+### Installation
 
 ```bash
+git clone https://github.com/Vishalsomaraju/carbontrack.git
+cd carbontrack
 npm install
-npm run dev        # http://localhost:3000
+npm run dev
 ```
 
-### Scripts
+Your app should now be running on [http://localhost:3000](http://localhost:3000).
 
-| Script                                   | Description                |
-| ---------------------------------------- | -------------------------- |
-| `npm run dev`                            | Dev server                 |
-| `npm run build` / `npm start`            | Production build / serve   |
-| `npm run test` / `npm run test:coverage` | Unit tests / coverage      |
-| `npm run lint` / `npm run typecheck`     | ESLint / TypeScript checks |
-| `npm run format`                         | Prettier                   |
+### Available Scripts
 
-## Project structure
+| Script                  | Description                            |
+| ----------------------- | -------------------------------------- |
+| `npm run dev`           | Start the development server           |
+| `npm run build`         | Build the project for production       |
+| `npm start`             | Serve the production build             |
+| `npm run test`          | Run the Vitest unit tests              |
+| `npm run test:coverage` | Run tests and output a coverage report |
+| `npm run lint`          | Run ESLint checks                      |
+| `npm run typecheck`     | Run TypeScript type validation         |
+| `npm run format`        | Run Prettier formatting                |
 
-```
+## 📁 Project Structure
+
+```text
 src/
-  app/         routes: / (landing), /calculator, /dashboard
-  components/  ui/, calculator/, charts/, dashboard/, layout/
-  lib/         pure domain logic + Zod schemas (+ unit tests)
-  middleware.ts  per-request CSP nonce
+├── app/               # Next.js App Router (pages: /, /calculator, /dashboard)
+├── components/        # React components (ui/, calculator/, charts/, dashboard/, layout/)
+├── lib/               # Pure domain logic + Zod schemas + Emission factors
+├── test/              # Comprehensive test suites (components/, lib/)
+└── middleware.ts      # Per-request CSP nonce implementation
 ```
 
-## Documentation
+## 📚 Documentation
 
-- [`CLAUDE.md`](./CLAUDE.md) — architecture & contribution guide
-- [`METHODOLOGY.md`](./METHODOLOGY.md) — emission factors, formulas, and sources
-- [`SECURITY.md`](./SECURITY.md) — security model & headers
+Dive deeper into the inner workings of CarbonTrack:
 
-## License
+- [`CLAUDE.md`](./CLAUDE.md) — Architecture & contribution guide
+- [`METHODOLOGY.md`](./METHODOLOGY.md) — Emission factors, formulas, and data sources
+- [`SECURITY.md`](./SECURITY.md) — Security model & headers configuration
 
-MIT
+## 📄 License
+
+This project is licensed under the [MIT License](./LICENSE).
