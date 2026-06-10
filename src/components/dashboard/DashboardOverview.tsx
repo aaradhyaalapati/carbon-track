@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { formatCo2, formatNumber, formatPercent, formatTonnes, type FootprintResult } from '@/lib';
+import { formatCo2, formatNumber, formatPercent, formatTonnes, type FootprintResult, type TargetComparison, type AverageComparison } from '@/lib';
 import { REGION_LABELS } from '@/components/labels';
 import { StatCard } from './StatCard';
 import { ComparisonCard } from './ComparisonCard';
@@ -7,8 +7,8 @@ import { ComparisonCard } from './ComparisonCard';
 export interface DashboardOverviewProps {
   result: FootprintResult;
   region: keyof typeof REGION_LABELS;
-  target: { ratio: number; status: 'good' | 'warning' | 'danger'; target: number };
-  average: { percentOfAverage: number; status: 'good' | 'warning' | 'danger'; average: number };
+  target: TargetComparison;
+  average: AverageComparison;
 }
 
 export function DashboardOverview({
