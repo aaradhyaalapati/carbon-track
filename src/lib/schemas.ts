@@ -20,11 +20,11 @@ const percent = z.number().finite().min(0).max(100);
 const nonNegativeInt = z.number().int().nonnegative();
 
 export const transportInputSchema = z.object({
-  carKmPerWeek: nonNegative.max(10_000).default(0),
+  carKmPerWeek: nonNegative.max(20_000).default(0),
   carFuel: z.enum(CAR_FUELS).default('petrol'),
-  publicTransitKmPerWeek: nonNegative.max(10_000).default(0),
-  flightsShortHaulPerYear: nonNegativeInt.max(500).default(0),
-  flightsLongHaulPerYear: nonNegativeInt.max(500).default(0),
+  publicTransitKmPerWeek: nonNegative.max(20_000).default(0),
+  flightsShortHaulPerYear: nonNegativeInt.max(200).default(0),
+  flightsLongHaulPerYear: nonNegativeInt.max(200).default(0),
 });
 
 export const homeInputSchema = z.object({

@@ -2,10 +2,8 @@ import { type z } from 'zod';
 import {
   footprintInputSchema,
   goalSchema,
-  historySchema,
   type FootprintInput,
   type Goal,
-  type HistoryEntry,
 } from './schemas';
 
 /**
@@ -21,11 +19,8 @@ import {
 const KEYS = {
   input: 'carbontrack:input',
   goal: 'carbontrack:goal',
-  history: 'carbontrack:history',
+  deviceId: 'carbontrack:deviceId',
 } as const;
-
-/** Cap stored history so a single browser key can never grow without bound. */
-const MAX_HISTORY = 100;
 
 function getStorage(): Storage | null {
   try {
@@ -104,31 +99,17 @@ export function clearGoal(): void {
   removeRaw(KEYS.goal);
 }
 
-/** Load the footprint history (empty array if missing or invalid). */
-export function loadHistory(): HistoryEntry[] {
-  return readValidated(KEYS.history, historySchema) ?? [];
-}
-
-/**
- * Append an entry to history, capped at MAX_HISTORY, and return the new list.
- *
- * Consecutive duplicates are skipped: if the footprint is unchanged from the most
- * recent entry, no new point is recorded. This keeps the trend meaningful and
- * stops the table filling with identical rows when results are revisited or the
- * questionnaire is re-submitted without edits.
- */
-export function addHistoryEntry(entry: HistoryEntry): HistoryEntry[] {
-  const history = loadHistory();
-  const last = history[history.length - 1];
-  if (last && last.totalKg === entry.totalKg) return history;
-  const next = [...history, entry].slice(-MAX_HISTORY);
-  writeRaw(KEYS.history, next);
-  return next;
-}
-
-/** Remove all footprint history. */
-export function clearHistory(): void {
-  removeRaw(KEYS.history);
+/** Get or generate a persistent device ID for anonymous tracking. */
+export function getDeviceId(): string | null {
+  const storage = getStorage();
+  if (!storage) return null;
+  
+  let id = storage.getItem(KEYS.deviceId);
+  if (!id) {
+    id = crypto.randomUUID();
+    storage.setItem(KEYS.deviceId, id);
+  }
+  return id;
 }
 
 export { KEYS as STORAGE_KEYS };

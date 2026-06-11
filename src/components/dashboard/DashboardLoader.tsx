@@ -1,14 +1,14 @@
 'use client';
 
 import { type JSX, useEffect, useState } from 'react';
-import { loadHistory, loadInput, type FootprintInput, type HistoryEntry } from '@/lib';
+import { loadInput, type FootprintInput } from '@/lib';
 import { ButtonLink, Card, Icon } from '@/components/ui';
 import { DashboardView } from './DashboardView';
 
 type State =
   | { phase: 'loading' }
   | { phase: 'empty' }
-  | { phase: 'ready'; input: FootprintInput; history: HistoryEntry[] };
+  | { phase: 'ready'; input: FootprintInput };
 
 /**
  * Client shell for the dashboard. Reads the saved answers and history from
@@ -25,7 +25,7 @@ export function DashboardLoader(): JSX.Element {
       setState({ phase: 'empty' });
       return;
     }
-    setState({ phase: 'ready', input, history: loadHistory() });
+    setState({ phase: 'ready', input });
   }, []);
 
   if (state.phase === 'loading') {
@@ -60,5 +60,5 @@ export function DashboardLoader(): JSX.Element {
     );
   }
 
-  return <DashboardView input={state.input} history={state.history} />;
+  return <DashboardView input={state.input} />;
 }

@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
   // Pin the file-tracing root to this project. Without this, a stray lockfile in a
   // parent directory makes Next infer the wrong workspace root (and warn about it).
   outputFileTracingRoot: __dirname,
+  output: 'standalone',
   async headers() {
     return [
       {

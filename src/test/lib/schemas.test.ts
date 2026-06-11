@@ -25,10 +25,21 @@ describe('footprintInputSchema', () => {
     expect(parsed.consumption.recycles).toBe(false);
   });
 
-  it('rejects negative distances', () => {
+  it('rejects negative distances (test_calculate_rejects_negative_values)', () => {
     const result = footprintInputSchema.safeParse({
       region: 'GLOBAL',
       transport: { carKmPerWeek: -5 },
+      home: {},
+      food: {},
+      consumption: {},
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects values above the maximum bounds', () => {
+    const result = footprintInputSchema.safeParse({
+      region: 'GLOBAL',
+      transport: { carKmPerWeek: 25000 }, // Above max 20,000
       home: {},
       food: {},
       consumption: {},

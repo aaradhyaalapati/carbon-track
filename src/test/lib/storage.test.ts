@@ -1,15 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import {
   STORAGE_KEYS,
-  addHistoryEntry,
   clearGoal,
-  clearHistory,
   isStorageAvailable,
   loadGoal,
-  loadHistory,
   loadInput,
   saveGoal,
   saveInput,
+  getDeviceId,
 } from '@/lib/storage';
 import { defaultFootprintInput, type Goal } from '@/lib/schemas';
 
@@ -37,6 +35,19 @@ let original: Storage | undefined;
 beforeEach(() => {
   original = globalRef.localStorage;
   globalRef.localStorage = createMockStorage();
+  
+  // Also mock crypto.randomUUID for getDeviceId
+  if (typeof crypto !== 'undefined' && !crypto.randomUUID) {
+    Object.defineProperty(crypto, 'randomUUID', {
+      value: () => 'test-uuid-1234',
+      configurable: true,
+    });
+  } else if (typeof crypto === 'undefined') {
+    Object.defineProperty(globalThis, 'crypto', {
+      value: { randomUUID: () => 'test-uuid-1234' },
+      configurable: true,
+    });
+  }
 });
 
 afterEach(() => {
@@ -57,7 +68,7 @@ describe('storage availability', () => {
     expect(isStorageAvailable()).toBe(false);
     expect(loadInput()).toBeNull();
     expect(saveInput(defaultFootprintInput)).toBe(false);
-    expect(loadHistory()).toEqual([]);
+    expect(getDeviceId()).toBeNull();
   });
 });
 
@@ -92,33 +103,17 @@ describe('goal persistence', () => {
   });
 });
 
-describe('history persistence', () => {
-  it('appends entries and can be cleared', () => {
-    addHistoryEntry({ date: 'd1', totalKg: 1000, totalTonnes: 1 });
-    addHistoryEntry({ date: 'd2', totalKg: 2000, totalTonnes: 2 });
-    expect(loadHistory()).toHaveLength(2);
-    clearHistory();
-    expect(loadHistory()).toHaveLength(0);
+describe('device id generation', () => {
+  it('generates and saves a device id if none exists', () => {
+    const id = getDeviceId();
+    expect(id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+    expect(globalRef.localStorage?.getItem(STORAGE_KEYS.deviceId)).toBe(id);
   });
 
-  it('skips a consecutive entry with an unchanged footprint', () => {
-    addHistoryEntry({ date: 'd1', totalKg: 1500, totalTonnes: 1.5 });
-    addHistoryEntry({ date: 'd2', totalKg: 1500, totalTonnes: 1.5 }); // duplicate total → skipped
-    addHistoryEntry({ date: 'd3', totalKg: 1800, totalTonnes: 1.8 }); // changed → recorded
-    const history = loadHistory();
-    expect(history).toHaveLength(2);
-    expect(history.map((h) => h.totalKg)).toEqual([1500, 1800]);
-    expect(history[0]?.date).toBe('d1'); // the first occurrence is kept
-  });
-
-  it('caps history at 100 entries, keeping the most recent', () => {
-    for (let i = 0; i < 105; i += 1) {
-      addHistoryEntry({ date: `d${i}`, totalKg: i, totalTonnes: i / 1000 });
-    }
-    const history = loadHistory();
-    expect(history).toHaveLength(100);
-    expect(history[0]?.date).toBe('d5');
-    expect(history[history.length - 1]?.date).toBe('d104');
+  it('loads an existing device id', () => {
+    globalRef.localStorage?.setItem(STORAGE_KEYS.deviceId, 'existing-uuid-5678');
+    const id = getDeviceId();
+    expect(id).toBe('existing-uuid-5678');
   });
 });
 
@@ -174,7 +169,6 @@ describe('removal without storage', () => {
     delete globalRef.localStorage;
     expect(() => {
       clearGoal();
-      clearHistory();
     }).not.toThrow();
   });
 });

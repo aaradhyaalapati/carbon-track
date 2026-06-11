@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CalculatorForm } from '@/components/calculator/CalculatorForm';
 import { STEP_LABELS } from '@/components/calculator/useCalculatorForm';
+import { axe } from 'vitest-axe';
 
 const push = vi.fn();
 vi.mock('next/navigation', () => ({
@@ -15,11 +16,13 @@ describe('CalculatorForm', () => {
     push.mockClear();
   });
 
-  it('starts on the region step with Back disabled', () => {
-    render(<CalculatorForm />);
+  it('starts on the region step with Back disabled and no a11y violations', async () => {
+    const { container } = render(<CalculatorForm />);
     expect(screen.getByRole('heading', { name: 'Region' })).toBeInTheDocument();
     expect(screen.getByText(`Step 1 of ${STEP_LABELS.length}`)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /back/i })).toBeDisabled();
+    
+    expect(await axe(container)).toHaveNoViolations();
   });
 
   it('advances through steps and moves focus to the step heading', async () => {
@@ -56,8 +59,7 @@ describe('CalculatorForm', () => {
     await user.click(screen.getByRole('button', { name: /see my results/i }));
 
     expect(push).toHaveBeenCalledWith('/dashboard');
-    // Submission persists the answers and records a history point.
+    // Submission persists the answers.
     expect(localStorage.getItem('carbontrack:input')).not.toBeNull();
-    expect(localStorage.getItem('carbontrack:history')).not.toBeNull();
   });
 });

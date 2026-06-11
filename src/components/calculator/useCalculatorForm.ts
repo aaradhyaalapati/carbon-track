@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  addHistoryEntry,
-  calculateFootprint,
   consumptionInputSchema,
   defaultFootprintInput,
   foodInputSchema,
@@ -127,12 +125,6 @@ export function useCalculatorForm(): UseCalculatorForm {
     }
     const valid = result.data;
     saveInput(valid);
-    const footprint = calculateFootprint(valid);
-    addHistoryEntry({
-      date: new Date().toISOString(),
-      totalKg: footprint.totalKg,
-      totalTonnes: footprint.totalTonnes,
-    });
     router.push('/dashboard');
   }
 

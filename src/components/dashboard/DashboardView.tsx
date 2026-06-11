@@ -4,9 +4,7 @@ import {
   categoryBreakdown,
   compareToAverage,
   compareToTarget,
-  generateTips,
   type FootprintInput,
-  type HistoryEntry,
 } from '@/lib';
 import { ButtonLink, Icon } from '@/components/ui';
 import { GoalTracker } from './GoalTracker';
@@ -17,7 +15,6 @@ import { DashboardHistory } from './DashboardHistory';
 
 export interface DashboardViewProps {
   input: FootprintInput;
-  history: HistoryEntry[];
 }
 
 /**
@@ -26,12 +23,16 @@ export interface DashboardViewProps {
  * Splitting it out from the localStorage loading shell keeps it deterministic
  * and straightforward to unit test.
  */
-export function DashboardView({ input, history }: DashboardViewProps): JSX.Element {
+export function DashboardView({ input }: DashboardViewProps): JSX.Element {
   const result = calculateFootprint(input);
   const breakdown = categoryBreakdown(result);
   const target = compareToTarget(result.totalTonnes);
   const average = compareToAverage(result.totalTonnes, input.region);
-  const tips = generateTips(input, result, { limit: 6 });
+  const currentEntry = { 
+    date: new Date().toISOString(), 
+    totalKg: result.totalKg,
+    totalTonnes: result.totalTonnes 
+  };
 
   return (
     <div className="flex flex-col gap-10">
@@ -46,9 +47,9 @@ export function DashboardView({ input, history }: DashboardViewProps): JSX.Eleme
         <GoalTracker currentTonnes={result.totalTonnes} />
       </section>
 
-      <DashboardTips tips={tips} />
+      <DashboardTips input={input} result={result} />
 
-      <DashboardHistory history={history} />
+      <DashboardHistory currentEntry={currentEntry} />
 
       <div className="flex justify-center">
         <ButtonLink href="/calculator" variant="secondary" size="lg">
