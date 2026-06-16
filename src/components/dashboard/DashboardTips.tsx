@@ -2,6 +2,7 @@ import { type JSX, useEffect, useState } from 'react';
 import type { Tip } from '@/lib/tips-engine';
 import { Card, Icon } from '@/components/ui';
 import type { FootprintInput, FootprintResult } from '@/lib/schemas';
+import { getInsights } from '@/lib';
 import { TipCard } from './TipCard';
 
 export interface DashboardTipsProps {
@@ -17,12 +18,7 @@ export function DashboardTips({ input, result }: DashboardTipsProps): JSX.Elemen
   useEffect(() => {
     async function fetchTips() {
       try {
-        const response = await fetch('/api/insights', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ input, result })
-        });
-        const data = await response.json();
+        const data = await getInsights(input, result);
         if (data.recommendations) {
           setTips(data.recommendations);
           setSource(data.source);
@@ -38,7 +34,7 @@ export function DashboardTips({ input, result }: DashboardTipsProps): JSX.Elemen
 
   if (loading) {
     return (
-      <section aria-labelledby="tips-heading" className="flex flex-col gap-4">
+      <section aria-labelledby="tips-heading" className="flex flex-col gap-4" aria-busy="true">
         <h2 id="tips-heading" className="font-display text-2xl font-bold text-ink">
           Your highest-impact actions
         </h2>

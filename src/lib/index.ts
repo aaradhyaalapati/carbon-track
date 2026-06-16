@@ -15,3 +15,4 @@ export * from './goal';
 export * from './tips-engine';
 export * from './storage';
 export * from './format';
+export * from './api';

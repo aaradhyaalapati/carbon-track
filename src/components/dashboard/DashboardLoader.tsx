@@ -30,7 +30,7 @@ export function DashboardLoader(): JSX.Element {
 
   if (state.phase === 'loading') {
     return (
-      <div className="flex flex-col gap-6" aria-hidden="true">
+      <div className="flex flex-col gap-6" aria-hidden="true" aria-busy="true">
         <div className="grid gap-4 lg:grid-cols-3">
           <Card className="h-32 animate-pulse bg-primary/5" />
           <Card className="h-32 animate-pulse bg-primary/5" />

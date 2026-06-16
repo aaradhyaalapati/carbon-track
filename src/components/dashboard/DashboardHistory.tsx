@@ -1,7 +1,7 @@
 import { type JSX, useEffect, useState } from 'react';
 import { Card } from '@/components/ui';
 import { HistoryTrendChart } from '@/components/charts/lazy';
-import type { HistoryEntry } from '@/lib';
+import { type HistoryEntry, saveEntry, listEntries } from '@/lib';
 import { getDeviceId } from '@/lib/storage';
 
 export interface DashboardHistoryProps {
@@ -24,16 +24,11 @@ export function DashboardHistory({ currentEntry }: DashboardHistoryProps): JSX.E
       try {
         // Save the current entry if provided
         if (currentEntry) {
-          await fetch('/api/entries', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ deviceId, entry: currentEntry })
-          });
+          await saveEntry(deviceId, currentEntry);
         }
 
         // Fetch the full history
-        const response = await fetch(`/api/entries?deviceId=${deviceId}`);
-        const data = await response.json();
+        const data = await listEntries(deviceId);
         if (data.entries) {
           setHistory(data.entries);
         }
@@ -48,7 +43,7 @@ export function DashboardHistory({ currentEntry }: DashboardHistoryProps): JSX.E
 
   if (loading) {
     return (
-      <section aria-labelledby="history-heading" className="flex flex-col gap-4">
+      <section aria-labelledby="history-heading" className="flex flex-col gap-4" aria-busy="true">
         <h2 id="history-heading" className="font-display text-2xl font-bold text-ink">
           Your progress over time
         </h2>
