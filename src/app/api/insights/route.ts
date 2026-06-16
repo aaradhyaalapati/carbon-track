@@ -25,17 +25,12 @@ export async function POST(req: NextRequest) {
 
     const { input, result } = parsed.data;
 
-    // Attempt Gemini call via Vertex AI using ADC (Application Default Credentials)
-    const project = process.env.GOOGLE_CLOUD_PROJECT;
-    const location = process.env.GOOGLE_CLOUD_REGION;
+    // Attempt Gemini call using API key (server-side only — never exposed to browser)
+    const apiKey = process.env.GEMINI_API_KEY;
 
-    if (project && location) {
+    if (apiKey) {
       try {
-        const ai = new GoogleGenAI({
-          vertexai: true,
-          project,
-          location
-        });
+        const ai = new GoogleGenAI({ apiKey });
         const prompt = `Carbon footprint breakdown (kg CO2e per year):
 ${JSON.stringify(result.details)}
 Total: ${result.totalKg} kg/yr.
@@ -89,7 +84,7 @@ Give tailored advice to reduce the largest sources.`;
         console.warn('Gemini generation failed, falling back to rules:', geminiError);
       }
     } else {
-      console.warn('Google Cloud project/region not configured. Using rule-based fallback.');
+      console.warn('GEMINI_API_KEY not configured. Using rule-based fallback.');
     }
 
     // Fallback to rules

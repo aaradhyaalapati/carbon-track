@@ -1,10 +1,9 @@
 import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
 import path from 'node:path';
 
 export default defineConfig({
-  // Use the automatic JSX runtime (as Next.js does) so component tests don't need
-  // `React` in scope.
-  esbuild: { jsx: 'automatic' },
+  plugins: [react()],
   test: {
     globals: true,
     environment: 'jsdom',

@@ -26,26 +26,26 @@
 
 - 🌍 **Six-step Calculator:** Tailored form capturing your region, transport, home energy, food, and consumption habits.
 - 📊 **Rich Results Dashboard:** Visualize your total footprint, category breakdown (bar + donut), comparison to the regional average and the 1.5 °C target, and your trend over time.
-- 🎯 **Smart Recommendations:** A ranked list of actions, each with the estimated kg CO₂e it would save specifically _for you_.
+- 🎯 **Smart Recommendations:** A ranked list of actions — powered by **Gemini AI** with a deterministic rules-engine fallback — each with the estimated kg CO₂e it would save specifically _for you_.
 - 📈 **Goal Tracking:** Set a reduction target and track your progress across multiple visits.
-- 🔒 **Privacy-First:** 100% client-side. No accounts, no servers, and your data never leaves your device!
+- 🔒 **Privacy-First:** No accounts, no passwords. Anonymous device IDs and Zod-validated `localStorage` keep your data yours.
 
 ## 🏗️ Architecture & Logic
 
-CarbonTrack is built on the modern web stack: **Next.js 15 (App Router) · TypeScript (strict) · Tailwind CSS · Zod · Recharts.**
+CarbonTrack is built on the modern web stack: **Next.js 15 (App Router) · TypeScript (strict) · Tailwind CSS · Zod · Recharts · Gemini AI (Vertex AI) · Cloud Firestore.**
 
 > [!NOTE]  
 > **Separation of concerns:** All domain logic lives in `src/lib` as pure, framework-free, fully-typed functions. A **Zod schema** acts as the single source of truth for every data shape. The UI imports from `@/lib` and never re-implements a calculation — keeping the logic trivially testable and the components thin.
 
 > [!IMPORTANT]
-> **Privacy & safety by construction:** There is no backend and no database, meaning there is nothing to breach and no secrets to leak. Persistence relies strictly on `localStorage`, which is treated as untrusted and re-validated on every read.
+> **Security by construction:** The backend uses **Application Default Credentials** — no API keys exist anywhere in the codebase. The frontend never touches an external API directly; all AI and database calls flow through server-side route handlers (`/api/insights`, `/api/entries`) which validate input with Zod, enforce per-IP rate limiting, and fall back gracefully to a deterministic rules engine if Gemini is unreachable.
 
 ### Evaluation Focus
 
-- **Code Quality**: Strict TypeScript (no `any`), isolated domain logic, Zod validation, small typed components, ESLint + Prettier.
-- **Security**: No backend, nonce-based **Content-Security-Policy (CSP)** (`src/middleware.ts`) with `strict-dynamic`, and full security headers (`next.config.ts`).
-- **Efficiency**: React Server Components by default, dynamically-imported charts, self-hosted fonts.
-- **Accessibility (WCAG 2.1 AA)**: Labelled inputs, `fieldset`/`legend` groups, `aria-live` error announcements, keyboard support, visible focus rings, chart data-table fallbacks, and motion sensitivity awareness.
+- **Code Quality**: Strict TypeScript (no `any`), isolated domain logic, Zod validation on every boundary, small typed components, ESLint + Prettier.
+- **Security**: Application Default Credentials (zero hardcoded keys), nonce-based **Content-Security-Policy** (`src/middleware.ts`) with `strict-dynamic`, per-IP rate limiting on all API routes, full security headers (`next.config.ts`), and Zod-validated `localStorage` reads.
+- **Efficiency**: React Server Components by default, dynamically-imported charts, self-hosted fonts, lazy rate-limit cleanup (no background intervals), backend proxy eliminates redundant external API calls from the browser.
+- **Accessibility (WCAG 2.1 AA)**: Labelled inputs, `fieldset`/`legend` groups, `aria-live` regions for both errors (`assertive`) and content updates (`polite`), `aria-busy` loading states, keyboard support, visible focus rings, and skip-to-content link.
 
 ## 🧪 Testing
 

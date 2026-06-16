@@ -43,7 +43,7 @@ describe('POST /api/insights', () => {
     vi.clearAllMocks();
   });
 
-  function createRequest(body: any = validBody) {
+  function createRequest(body: unknown = validBody) {
     return new NextRequest('http://localhost/api/insights', {
       method: 'POST',
       body: JSON.stringify(body)
@@ -51,8 +51,7 @@ describe('POST /api/insights', () => {
   }
 
   it('test_gemini_failure_falls_back_to_rules', async () => {
-    process.env.GOOGLE_CLOUD_PROJECT = 'test-project';
-    process.env.GOOGLE_CLOUD_REGION = 'us-central1';
+    process.env.GEMINI_API_KEY = 'test-key';
     
     // Simulate AI failure
     generateContentMock.mockRejectedValue(new Error('AI Service Down'));
@@ -67,8 +66,7 @@ describe('POST /api/insights', () => {
   });
 
   it('test_empty_gemini_recommendations_fall_back_to_rules', async () => {
-    process.env.GOOGLE_CLOUD_PROJECT = 'test-project';
-    process.env.GOOGLE_CLOUD_REGION = 'us-central1';
+    process.env.GEMINI_API_KEY = 'test-key';
     
     // Simulate AI returning empty recommendations
     generateContentMock.mockResolvedValue({
@@ -85,8 +83,7 @@ describe('POST /api/insights', () => {
   });
 
   it('test_malformed_gemini_json_falls_back_to_rules', async () => {
-    process.env.GOOGLE_CLOUD_PROJECT = 'test-project';
-    process.env.GOOGLE_CLOUD_REGION = 'us-central1';
+    process.env.GEMINI_API_KEY = 'test-key';
     
     // Simulate malformed JSON
     generateContentMock.mockResolvedValue({
@@ -103,9 +100,8 @@ describe('POST /api/insights', () => {
   });
 
   it('test_disabled_gemini_uses_rules', async () => {
-    // No GOOGLE_CLOUD_PROJECT
-    delete process.env.GOOGLE_CLOUD_PROJECT;
-    delete process.env.GOOGLE_CLOUD_REGION;
+    // No GEMINI_API_KEY
+    delete process.env.GEMINI_API_KEY;
     
     const req = createRequest();
     const res = await POST(req);

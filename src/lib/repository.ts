@@ -1,4 +1,4 @@
-import { HistoryEntry } from './schemas';
+import type { HistoryEntry } from './schemas';
 import { db } from './firebase';
 
 export interface EntryRepository {
