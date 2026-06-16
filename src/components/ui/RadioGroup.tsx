@@ -1,7 +1,7 @@
 import { type JSX, useId } from 'react';
 import { cn } from '@/lib/cn';
 
-export interface RadioOption<T extends string> {
+interface RadioOption<T extends string> {
   value: T;
   label: string;
   description?: string;

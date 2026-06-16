@@ -15,7 +15,7 @@ export type FieldErrors = Record<string, string>;
  * top-level path segment, which is what each step's controls look up. Keeping only
  * the first message per field matches what we surface in the UI.
  */
-export function toFieldErrors(error: z.ZodError): FieldErrors {
+function toFieldErrors(error: z.ZodError): FieldErrors {
   const out: FieldErrors = {};
   for (const issue of error.issues) {
     const key = issue.path.length > 0 ? String(issue.path[0]) : '_root';

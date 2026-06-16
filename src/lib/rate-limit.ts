@@ -7,25 +7,23 @@ interface RateLimitRecord {
 
 const store = new Map<string, RateLimitRecord>();
 
-// Simple cleanup interval to prevent the Map from growing infinitely.
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, record] of store.entries()) {
-    if (record.resetAt <= now) {
-      store.delete(key);
-    }
-  }
-}, 60000); // Run every minute
-
 export function rateLimit(
   req: NextRequest,
   limit: number,
   windowMs: number
 ): NextResponse | null {
-  // Use x-forwarded-for if behind a proxy (like Cloud Run), otherwise fallback to 'unknown'
-  // as standard App Router handlers don't expose socket IP directly.
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown';
   const now = Date.now();
+
+  // Lazy cleanup: clear expired entries on-the-fly to avoid background interval leaks
+  // and optimize memory usage in serverless environments.
+  if (store.size > 1000) { // arbitrary threshold to prevent unbounded growth
+    for (const [key, record] of store.entries()) {
+      if (record.resetAt <= now) {
+        store.delete(key);
+      }
+    }
+  }
 
   const record = store.get(ip);
 

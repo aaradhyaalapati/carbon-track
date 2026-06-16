@@ -6,7 +6,7 @@ export interface EntryRepository {
   saveEntry(deviceId: string, entry: HistoryEntry): Promise<{ success: true; duplicate?: boolean }>;
 }
 
-export class FirestoreEntryRepository implements EntryRepository {
+class FirestoreEntryRepository implements EntryRepository {
   async getEntries(deviceId: string, limit: number): Promise<HistoryEntry[]> {
     const snapshot = await db.collection('entries')
       .where('deviceId', '==', deviceId)
@@ -42,7 +42,7 @@ export class FirestoreEntryRepository implements EntryRepository {
   }
 }
 
-export class InMemoryEntryRepository implements EntryRepository {
+class InMemoryEntryRepository implements EntryRepository {
   private entries: Array<HistoryEntry & { deviceId: string; timestamp: string }> = [];
 
   async getEntries(deviceId: string, limit: number): Promise<HistoryEntry[]> {

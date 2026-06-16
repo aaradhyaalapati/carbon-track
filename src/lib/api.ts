@@ -1,7 +1,7 @@
 import type { FootprintInput, FootprintResult, HistoryEntry } from './schemas';
 import type { Tip } from './tips-engine';
 
-export class ApiError extends Error {
+class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
     this.name = 'ApiError';

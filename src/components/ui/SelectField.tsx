@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { cn } from '@/lib/cn';
 import { Field, fieldControlClasses } from './Field';
 
-export interface SelectOption<T extends string> {
+interface SelectOption<T extends string> {
   value: T;
   label: string;
 }

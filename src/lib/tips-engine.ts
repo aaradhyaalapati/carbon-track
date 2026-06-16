@@ -13,7 +13,7 @@ import {
 import { round } from './number';
 import type { CategoryKey, FootprintInput, FootprintResult } from './schemas';
 
-export type Effort = 'low' | 'medium' | 'high';
+type Effort = 'low' | 'medium' | 'high';
 
 export interface Tip {
   id: string;
