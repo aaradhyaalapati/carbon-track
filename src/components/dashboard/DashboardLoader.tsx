@@ -5,10 +5,7 @@ import { loadInput, type FootprintInput } from '@/lib';
 import { ButtonLink, Card, Icon } from '@/components/ui';
 import { DashboardView } from './DashboardView';
 
-type State =
-  | { phase: 'loading' }
-  | { phase: 'empty' }
-  | { phase: 'ready'; input: FootprintInput };
+type State = { phase: 'loading' } | { phase: 'empty' } | { phase: 'ready'; input: FootprintInput };
 
 /**
  * Client shell for the dashboard. Reads the saved answers and history from

@@ -83,8 +83,6 @@ export const CATEGORY_META: Record<CategoryKey, CategoryMeta> = {
   },
 };
 
-
-
 /** Build typed `{value,label}` option arrays from an enum + label map. */
 export function toOptions<T extends string>(
   values: ReadonlyArray<T>,

@@ -26,7 +26,9 @@ export function DashboardTips({ input, result }: DashboardTipsProps): JSX.Elemen
         }
       } catch (err) {
         console.error('Failed to fetch insights', err);
-        setError('We encountered an issue loading your personalized insights. Please try again later.');
+        setError(
+          'We encountered an issue loading your personalized insights. Please try again later.',
+        );
       } finally {
         setLoading(false);
       }

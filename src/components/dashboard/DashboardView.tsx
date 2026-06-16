@@ -28,10 +28,10 @@ export function DashboardView({ input }: DashboardViewProps): JSX.Element {
   const breakdown = categoryBreakdown(result);
   const target = compareToTarget(result.totalTonnes);
   const average = compareToAverage(result.totalTonnes, input.region);
-  const currentEntry = { 
-    date: new Date().toISOString(), 
+  const currentEntry = {
+    date: new Date().toISOString(),
     totalKg: result.totalKg,
-    totalTonnes: result.totalTonnes 
+    totalTonnes: result.totalTonnes,
   };
 
   return (
