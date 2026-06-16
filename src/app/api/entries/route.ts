@@ -1,11 +1,15 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { historyEntrySchema } from '@/lib/schemas';
 import { getRepository } from '@/lib/repository';
+import { rateLimit } from '@/lib/rate-limit';
 
 // Security: Max 100 entries per device to prevent unlimited growth
 const MAX_HISTORY = 100;
 
 export async function GET(req: NextRequest) {
+  const limitResponse = rateLimit(req, 20, 60_000);
+  if (limitResponse) return limitResponse;
+
   const { searchParams } = new URL(req.url);
   const deviceId = searchParams.get('deviceId');
 
@@ -24,6 +28,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const limitResponse = rateLimit(req, 20, 60_000);
+  if (limitResponse) return limitResponse;
+
   try {
     const body = await req.json();
     

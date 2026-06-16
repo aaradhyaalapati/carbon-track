@@ -3,6 +3,7 @@ import { GoogleGenAI, Type } from '@google/genai';
 import { z } from 'zod';
 import { generateTips } from '@/lib/tips-engine';
 import { footprintInputSchema, footprintResultSchema } from '@/lib/schemas';
+import { rateLimit } from '@/lib/rate-limit';
 
 const requestSchema = z.object({
   input: footprintInputSchema,
@@ -12,6 +13,9 @@ const requestSchema = z.object({
 const _SYSTEM_INSTRUCTION = `You are a concise, encouraging sustainability coach. Given a person's annual carbon footprint breakdown (kg CO2e), produce a short summary and 2-4 specific, realistic actions that target their largest emission sources. Each action must include an estimated annual saving in kg CO2e. Be practical and non-judgmental. Effort must be "low", "medium", or "high". Categories must be one of: "transport", "home", "food", "consumption".`;
 
 export async function POST(req: NextRequest) {
+  const limitResponse = rateLimit(req, 10, 60_000);
+  if (limitResponse) return limitResponse;
+
   try {
     const body = await req.json();
     const parsed = requestSchema.safeParse(body);

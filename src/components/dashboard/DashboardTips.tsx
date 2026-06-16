@@ -13,6 +13,7 @@ export interface DashboardTipsProps {
 export function DashboardTips({ input, result }: DashboardTipsProps): JSX.Element {
   const [tips, setTips] = useState<Tip[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [source, setSource] = useState<'gemini' | 'rules'>('rules');
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export function DashboardTips({ input, result }: DashboardTipsProps): JSX.Elemen
         }
       } catch (err) {
         console.error('Failed to fetch insights', err);
+        setError('We encountered an issue loading your personalized insights. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -43,8 +45,24 @@ export function DashboardTips({ input, result }: DashboardTipsProps): JSX.Elemen
     );
   }
 
+  if (error) {
+    return (
+      <section aria-labelledby="tips-heading" className="flex flex-col gap-4">
+        <h2 id="tips-heading" className="font-display text-2xl font-bold text-ink">
+          Your highest-impact actions
+        </h2>
+        <Card className="border-danger/20 bg-danger/5" role="alert" aria-live="assertive">
+          <div className="flex items-center gap-3">
+            <Icon name="x" size={22} className="text-danger" />
+            <p className="text-sm font-medium text-danger">{error}</p>
+          </div>
+        </Card>
+      </section>
+    );
+  }
+
   return (
-    <section aria-labelledby="tips-heading" className="flex flex-col gap-4">
+    <section aria-labelledby="tips-heading" className="flex flex-col gap-4" aria-live="polite">
       <div className="flex items-center justify-between">
         <h2 id="tips-heading" className="font-display text-2xl font-bold text-ink">
           Your highest-impact actions

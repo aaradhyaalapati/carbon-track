@@ -15,6 +15,7 @@ const securityHeaders = [
   },
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
   { key: 'X-DNS-Prefetch-Control', value: 'off' },
+  { key: 'X-XSS-Protection', value: '1; mode=block' },
 ];
 
 const nextConfig: NextConfig = {

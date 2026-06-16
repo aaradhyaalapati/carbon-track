@@ -12,6 +12,7 @@ export interface DashboardHistoryProps {
 export function DashboardHistory({ currentEntry }: DashboardHistoryProps): JSX.Element {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function syncHistory() {
@@ -34,6 +35,7 @@ export function DashboardHistory({ currentEntry }: DashboardHistoryProps): JSX.E
         }
       } catch (err) {
         console.error('Failed to sync history', err);
+        setError('We encountered an issue loading your history trend. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -52,8 +54,21 @@ export function DashboardHistory({ currentEntry }: DashboardHistoryProps): JSX.E
     );
   }
 
+  if (error) {
+    return (
+      <section aria-labelledby="history-heading" className="flex flex-col gap-4">
+        <h2 id="history-heading" className="font-display text-2xl font-bold text-ink">
+          Your progress over time
+        </h2>
+        <Card className="border-danger/20 bg-danger/5" role="alert" aria-live="assertive">
+          <p className="text-sm font-medium text-danger">{error}</p>
+        </Card>
+      </section>
+    );
+  }
+
   return (
-    <section aria-labelledby="history-heading" className="flex flex-col gap-4">
+    <section aria-labelledby="history-heading" className="flex flex-col gap-4" aria-live="polite">
       <h2 id="history-heading" className="font-display text-2xl font-bold text-ink">
         Your progress over time
       </h2>

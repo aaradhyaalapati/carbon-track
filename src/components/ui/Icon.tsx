@@ -27,7 +27,8 @@ export type IconName =
   | 'globe'
   | 'trophy'
   | 'shield'
-  | 'spark';
+  | 'spark'
+  | 'x';
 
 interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'name'> {
   name: IconName;
@@ -119,6 +120,7 @@ const PATHS: Record<IconName, React.ReactNode> = {
   spark: (
     <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" />
   ),
+  x: <path d="M18 6L6 18M6 6l12 12" />,
 };
 
 export function Icon({ name, title, size = 24, className, ...rest }: IconProps): JSX.Element {
