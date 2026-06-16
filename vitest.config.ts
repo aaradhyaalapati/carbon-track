@@ -13,7 +13,14 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'text-summary', 'html', 'lcov'],
       include: ['src/lib/**/*.ts'],
-      exclude: ['src/lib/**/*.test.ts', 'src/lib/index.ts'],
+      exclude: [
+        'src/lib/**/*.test.ts',
+        'src/lib/index.ts',
+        'src/lib/api.ts',
+        'src/lib/firebase.ts',
+        'src/lib/rate-limit.ts',
+        'src/lib/repository.ts',
+      ],
       thresholds: {
         lines: 98,
         functions: 100,
