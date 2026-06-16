@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    
+
     // Ensure payload has a deviceId
     if (!body.deviceId || typeof body.deviceId !== 'string') {
       return NextResponse.json({ error: 'Missing or invalid deviceId' }, { status: 400 });
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     const entry = parsed.data;
     const repo = getRepository();
-    
+
     const result = await repo.saveEntry(body.deviceId, entry);
     return NextResponse.json(result);
   } catch (error) {
@@ -54,4 +54,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
-

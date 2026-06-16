@@ -53,20 +53,30 @@ Give tailored advice to reduce the largest sources.`;
                     type: Type.OBJECT,
                     properties: {
                       id: { type: Type.STRING },
-                      category: { type: Type.STRING, description: 'transport, home, food, or consumption' },
+                      category: {
+                        type: Type.STRING,
+                        description: 'transport, home, food, or consumption',
+                      },
                       title: { type: Type.STRING },
                       description: { type: Type.STRING },
                       estimatedSavingKg: { type: Type.NUMBER },
-                      effort: { type: Type.STRING, description: 'low, medium, or high' }
+                      effort: { type: Type.STRING, description: 'low, medium, or high' },
                     },
-                    required: ['id', 'category', 'title', 'description', 'estimatedSavingKg', 'effort']
-                  }
-                }
+                    required: [
+                      'id',
+                      'category',
+                      'title',
+                      'description',
+                      'estimatedSavingKg',
+                      'effort',
+                    ],
+                  },
+                },
               },
-              required: ['summary', 'recommendations']
+              required: ['summary', 'recommendations'],
             },
             temperature: 0.4,
-          }
+          },
         });
 
         if (response.text) {

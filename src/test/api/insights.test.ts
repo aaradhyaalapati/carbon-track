@@ -9,10 +9,10 @@ vi.mock('@google/genai', () => {
   return {
     GoogleGenAI: class {
       models = {
-        generateContent: generateContentMock
+        generateContent: generateContentMock,
       };
     },
-    Type: { OBJECT: 'object', STRING: 'string', ARRAY: 'array', NUMBER: 'number' }
+    Type: { OBJECT: 'object', STRING: 'string', ARRAY: 'array', NUMBER: 'number' },
   };
 });
 
@@ -20,17 +20,29 @@ vi.mock('@google/genai', () => {
 const validBody = {
   input: {
     region: 'GLOBAL',
-    transport: { carKmPerWeek: 100, carFuel: 'petrol', publicTransitKmPerWeek: 0, flightsShortHaulPerYear: 0, flightsLongHaulPerYear: 0 },
-    home: { electricityKwhPerMonth: 200, renewablePercent: 0, heatingFuel: 'gas', heatingAmountPerMonth: 100, householdSize: 2 },
+    transport: {
+      carKmPerWeek: 100,
+      carFuel: 'petrol',
+      publicTransitKmPerWeek: 0,
+      flightsShortHaulPerYear: 0,
+      flightsLongHaulPerYear: 0,
+    },
+    home: {
+      electricityKwhPerMonth: 200,
+      renewablePercent: 0,
+      heatingFuel: 'gas',
+      heatingAmountPerMonth: 100,
+      householdSize: 2,
+    },
     food: { diet: 'medium_meat', foodWaste: 'medium' },
-    consumption: { shopping: 'average', recycles: true }
+    consumption: { shopping: 'average', recycles: true },
   },
   result: {
     totalKg: 5000,
     totalTonnes: 5,
     categories: { transport: 1000, home: 1000, food: 2000, consumption: 1000 },
-    details: { car: 1000, transit: 0, flights: 0, electricity: 500, heating: 500 }
-  }
+    details: { car: 1000, transit: 0, flights: 0, electricity: 500, heating: 500 },
+  },
 };
 
 describe('POST /api/insights', () => {
@@ -46,20 +58,20 @@ describe('POST /api/insights', () => {
   function createRequest(body: unknown = validBody) {
     return new NextRequest('http://localhost/api/insights', {
       method: 'POST',
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
   }
 
   it('test_gemini_failure_falls_back_to_rules', async () => {
     process.env.GEMINI_API_KEY = 'test-key';
-    
+
     // Simulate AI failure
     generateContentMock.mockRejectedValue(new Error('AI Service Down'));
-    
+
     const req = createRequest();
     const res = await POST(req);
     const data = await res.json();
-    
+
     expect(res.status).toBe(200);
     expect(data.source).toBe('rules');
     expect(data.recommendations).toBeInstanceOf(Array);
@@ -67,16 +79,16 @@ describe('POST /api/insights', () => {
 
   it('test_empty_gemini_recommendations_fall_back_to_rules', async () => {
     process.env.GEMINI_API_KEY = 'test-key';
-    
+
     // Simulate AI returning empty recommendations
     generateContentMock.mockResolvedValue({
-      text: JSON.stringify({ summary: 'No tips.', recommendations: [] })
+      text: JSON.stringify({ summary: 'No tips.', recommendations: [] }),
     });
-    
+
     const req = createRequest();
     const res = await POST(req);
     const data = await res.json();
-    
+
     expect(res.status).toBe(200);
     expect(data.source).toBe('rules');
     expect(data.recommendations.length).toBeGreaterThan(0);
@@ -84,16 +96,16 @@ describe('POST /api/insights', () => {
 
   it('test_malformed_gemini_json_falls_back_to_rules', async () => {
     process.env.GEMINI_API_KEY = 'test-key';
-    
+
     // Simulate malformed JSON
     generateContentMock.mockResolvedValue({
-      text: '{ invalid json '
+      text: '{ invalid json ',
     });
-    
+
     const req = createRequest();
     const res = await POST(req);
     const data = await res.json();
-    
+
     expect(res.status).toBe(200);
     expect(data.source).toBe('rules');
     expect(data.recommendations).toBeInstanceOf(Array);
@@ -102,11 +114,11 @@ describe('POST /api/insights', () => {
   it('test_disabled_gemini_uses_rules', async () => {
     // No GEMINI_API_KEY
     delete process.env.GEMINI_API_KEY;
-    
+
     const req = createRequest();
     const res = await POST(req);
     const data = await res.json();
-    
+
     expect(res.status).toBe(200);
     expect(data.source).toBe('rules');
     expect(generateContentMock).not.toHaveBeenCalled();

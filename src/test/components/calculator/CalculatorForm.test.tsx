@@ -21,7 +21,7 @@ describe('CalculatorForm', () => {
     expect(screen.getByRole('heading', { name: 'Region' })).toBeInTheDocument();
     expect(screen.getByText(`Step 1 of ${STEP_LABELS.length}`)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /back/i })).toBeDisabled();
-    
+
     expect(await axe(container)).toHaveNoViolations();
   });
 

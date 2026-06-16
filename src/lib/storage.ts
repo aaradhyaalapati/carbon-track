@@ -1,10 +1,5 @@
 import { type z } from 'zod';
-import {
-  footprintInputSchema,
-  goalSchema,
-  type FootprintInput,
-  type Goal,
-} from './schemas';
+import { footprintInputSchema, goalSchema, type FootprintInput, type Goal } from './schemas';
 
 /**
  * Safe localStorage layer.
@@ -103,7 +98,7 @@ export function clearGoal(): void {
 export function getDeviceId(): string | null {
   const storage = getStorage();
   if (!storage) return null;
-  
+
   let id = storage.getItem(KEYS.deviceId);
   if (!id) {
     id = crypto.randomUUID();

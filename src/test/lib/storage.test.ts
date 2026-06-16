@@ -35,7 +35,7 @@ let original: Storage | undefined;
 beforeEach(() => {
   original = globalRef.localStorage;
   globalRef.localStorage = createMockStorage();
-  
+
   // Also mock crypto.randomUUID for getDeviceId
   if (typeof crypto !== 'undefined' && !crypto.randomUUID) {
     Object.defineProperty(crypto, 'randomUUID', {
